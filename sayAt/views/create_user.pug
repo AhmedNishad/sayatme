@@ -6,16 +6,17 @@ block content
 
     h4 Register for Scrutiny
     h3.txt-danger= error
-    form(action="" method="POST")
+    form.form_user(action="" method="POST")
 
         label(for='email') Email:
-        input(type='email' name='email')
+        input(type='email' name='email' id='email' required)
         br
         label(for='password') Password
-        input(type='password' name='password')
+        input(type='password' name='password' id='password' required)
         br
         div.form-control 
             label(for='user') www.sayatclone.com/
-            input(name='user' type='text') 
+            input(name='user' type='text' id='user' required) 
             br
         button.btn-primary.btn(type='submit') Create
+    script(src="../public/javascripts/login_local.js" crossorigin="anonymous")

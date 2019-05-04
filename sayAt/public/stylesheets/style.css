@@ -35,3 +35,7 @@ a {
   background: #EEE;
   margin: 0.4rem;
 }
+
+.form_user *{
+  margin: 0.3rem;
+}
