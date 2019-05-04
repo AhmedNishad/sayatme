@@ -1,0 +1,17 @@
+extends layout
+
+block content
+  h1= title
+
+  p Speak your mind or have your mind spoken about
+
+  each user in users
+    div.user
+  
+
+      a(href=`/user/${user.id}`)= user.name
+      p= user.sayats.length
+        if user.sayats.length==1
+          | &nbspThing has been said about this person
+        else
+          | &nbspThings have been said about this person

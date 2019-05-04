@@ -1,0 +1,34 @@
+extends layout
+
+block content
+  h1= title
+
+  p Speak your mind or have your mind spoken about
+
+  div
+    h3= user
+    hr
+    if sayats.length > 0
+        
+        each sayat in sayats
+            div.sayat
+                p= sayat.date_added_formatted
+                h4= sayat.description
+            hr
+            form(method='POST' action='' )
+                
+                label(for='sayat') Speak your mind
+                br
+                textarea(name="sayat", cols="30", rows="10")
+                button.btn.btn-primary(type='submit') Say At 
+
+    else
+        | This user has no sayats
+
+        h3 Add a Sayat
+        form(method='POST' action='' )
+            
+            label(for='sayat')
+            br
+            textarea(name="sayat", cols="30", rows="10" required)
+            button.btn.btn-primary(type='submit') Say At 

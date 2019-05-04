@@ -1,0 +1,21 @@
+extends layout
+
+block content
+
+    h1=title
+
+    h4 Register for Scrutiny
+    h3.txt-danger= error
+    form(action="" method="POST")
+
+        label(for='email') Email:
+        input(type='email' name='email')
+        br
+        label(for='password') Password
+        input(type='password' name='password')
+        br
+        div.form-control 
+            label(for='user') www.sayatclone.com/
+            input(name='user' type='text') 
+            br
+        button.btn-primary.btn(type='submit') Create
