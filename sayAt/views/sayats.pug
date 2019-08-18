@@ -11,16 +11,20 @@ block content
     if sayats.length > 0
         
         each sayat in sayats
-            div.sayat
+            div(id=sayat._id).sayat
                 p= sayat.date_added_formatted
                 h4= sayat.description
+                a(href=`${userId}/${sayat._id}/interact?action=1`) Like
+                p= sayat.likes
+                a(href=`${userId}/${sayat._id}/interact?action=2`) Dislike
+                p= sayat.dislikes
             hr
-            form(method='POST' action='' )
-                
-                label(for='sayat') Speak your mind
-                br
-                textarea(name="sayat", cols="30", rows="10")
-                button.btn.btn-primary(type='submit') Say At 
+        form(method='POST' action='' )
+            
+            label(for='sayat') Speak your mind
+            br
+            textarea(name="sayat", cols="30", rows="10")
+            button.btn.btn-primary(type='submit') Say At 
 
     else
         | This user has no sayats

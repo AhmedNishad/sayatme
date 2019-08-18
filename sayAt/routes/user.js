@@ -7,6 +7,8 @@ router.get('/', userController.get_users)
 
 router.get('/:id', userController.get_user_sayats)
 
+router.get('/:userid/:sayatid/interact', userController.sayat_interact)
+
 router.post('/:id', userController.create_user_sayat)
 
 

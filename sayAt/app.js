@@ -1,8 +1,9 @@
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
-var cookieParser = require('cookie-parser');
+//var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var session = require('express-session')
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -11,7 +12,7 @@ var userRouter = require('./routes/user')
 var app = express();
 
 let mongoose = require('mongoose')
-let mongoDB = 'mongodb://127.0.0.1/sayat'
+let mongoDB = 'mongodb+srv://nishad:aristotle123@sayat-g5aje.mongodb.net/test?retryWrites=true&w=majority'
 
 mongoose.connect(mongoDB, { useNewUrlParser:  true})
 
@@ -22,6 +23,14 @@ let db = mongoose.connection
 db.on('error', console.error.bind(console, 'Mongo Connection error'))
 
 
+// Session setup
+app.use(session({
+  secret: 'donkey cat',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: true }
+}))
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -29,7 +38,7 @@ app.set('view engine', 'pug');
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+//app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);

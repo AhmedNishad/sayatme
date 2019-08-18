@@ -8,7 +8,12 @@ const { body, validationResult } = require('express-validator/check')
 const { sanitizeBody } = require('express-validator/filter')
 
 exports.get_users = (req,res,next)=>{
-
+    console.log(req.session.sayats)
+    if(!req.session.sayats){
+        console.log('no sayats have been interacted with')
+        req.session.sayats = []
+        req.session.save()
+    }
     User.find()
     .exec((err, list_users)=>{
         let sortedUsers = list_users.sort((a,b)=>{
@@ -17,13 +22,14 @@ exports.get_users = (req,res,next)=>{
         }) 
         let reducedArray = sortedUsers.slice(0, 100)
         
-        console.log(sortedUsers)
         if(err) next(err)
-        res.render('index', {users:reducedArray})
+        res.render('index', {title:"SayatMe" ,users:reducedArray})
     })
 }
 
 exports.get_user_sayats = (req, res, next)=>{
+    
+    console.log(req.session)
     User.findById(req.params.id).populate('sayat')
     .exec((err, results)=>{
         if(err) next(err)
@@ -32,7 +38,7 @@ exports.get_user_sayats = (req, res, next)=>{
             return query
         }) 
         let reducedArray = sortedSayats.slice(0, 100)
-        res.render('sayats',{titles:"Sayat List for user",user: results.name, sayats: sortedSayats})
+        res.render('sayats',{titles:"Sayat List for user",user: results.name, sayats: sortedSayats, userId: req.params.id})
     })
 }
 
@@ -69,6 +75,28 @@ exports.create_user_sayat = [
 exports.create_user_get = (req, res, next)=>{
     
     res.render('create_user', {title: "Create User"})
+}
+
+exports.sayat_interact = (req,res,next)=>{
+    let action = req.query.action;
+    console.log(req.session.sayats)
+
+
+     User.findById(req.params.userid).then(user=>{
+        let sayat = user.sayats.id(req.params.sayatid)    
+        if(action == 1){
+            sayat.likes += 1;
+        }else{
+            sayat.dislikes += 1;
+        }
+        
+        //req.session.sayats.push(sayat)
+
+        user.save()
+        res.redirect(`/user/${user._id}`)
+    }) 
+
+    
 }
 
 exports.create_user_post = [
